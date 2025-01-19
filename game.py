@@ -49,30 +49,13 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (200, 500)
 
-    def move_up(self):
-        if self.rect.top > 0:
-            self.rect.move_ip(0, -10)
-
-    def move_down(self):
-        if self.rect.bottom < SCREEN_HEIGHT:
-            self.rect.move_ip(0, 10)
-
     def move_left(self):
         if self.rect.left > 0:
-            self.rect.move_ip(-10, 0)
+            self.rect.move_ip(-20, 0)
 
     def move_right(self):
         if self.rect.right < SCREEN_WIDTH:
-            self.rect.move_ip(10, 0)
-
-    # def update(self):
-    #     pressed_keys = pygame.key.get_pressed()
-    #     if self.rect.left > 0:
-    #         if pressed_keys[K_LEFT]:
-    #             self.rect.move_ip(-5, 0)
-    #     if self.rect.right < SCREEN_WIDTH:
-    #         if pressed_keys[K_RIGHT]:
-    #             self.rect.move_ip(5, 0)
+            self.rect.move_ip(20, 0)
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
@@ -80,11 +63,15 @@ class Player(pygame.sprite.Sprite):
 P1 = Player()
 E1 = Enemy()
 
+pause = False
+
 def play():
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            pygame.quit()
-            sys.exit()
+    # for event in pygame.event.get():
+    #     if event.type == QUIT:
+    #         pygame.quit()
+    #         sys.exit()
+    if pause:
+        return
     P1.update()
     E1.move()
 
@@ -94,18 +81,3 @@ def play():
 
     pygame.display.update()
     FramePerSec.tick(FPS)
-
-# while True:
-#     for event in pygame.event.get():
-#         if event.type == QUIT:
-#             pygame.quit()
-#             sys.exit()
-#     P1.update()
-#     E1.move()
-
-#     DISPLAYSURF.fill(WHITE)
-#     P1.draw(DISPLAYSURF)
-#     E1.draw(DISPLAYSURF)
-
-#     pygame.display.update()
-#     FramePerSec.tick(FPS)
