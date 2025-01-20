@@ -21,7 +21,7 @@ SCREEN_HEIGHT = 600
 
 DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 DISPLAYSURF.fill(WHITE)
-pygame.display.set_caption("Game")
+# pygame.display.set_caption("Game")
 
 clock = pygame.time.Clock()
 
@@ -60,24 +60,59 @@ class Player(pygame.sprite.Sprite):
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-P1 = Player()
-E1 = Enemy()
+class Game:
+    def __init__(self):
+        self.DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        pygame.display.set_caption("Game")
+        self.clock = pygame.time.Clock()
+        self.P1 = Player()
+        self.E1 = Enemy()
+        self.running = True
+       
+    def play(self):
+        print("Starting loop")
+        while self.running:
+            print("New Iteration")
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.running = False
+                
+            self.P1.update()
+            self.E1.move()
 
-pause = False
+            self.DISPLAYSURF.fill(WHITE)
+            self.P1.draw(DISPLAYSURF)
+            self.E1.draw(DISPLAYSURF)
 
-def play():
-    # for event in pygame.event.get():
-    #     if event.type == QUIT:
-    #         pygame.quit()
-    #         sys.exit()
-    if pause:
-        return
-    P1.update()
-    E1.move()
+            pygame.display.update()
+            self.clock.tick(FPS)
 
-    DISPLAYSURF.fill(WHITE)
-    P1.draw(DISPLAYSURF)
-    E1.draw(DISPLAYSURF)
+    def stop(self):
+        print("Someone called stop")
+        self.running = False
 
-    pygame.display.update()
-    FramePerSec.tick(FPS)
+# if __name__ == "__main__":
+#     import threading
+
+#     def start_game():
+#         game = Game()
+#         game.play()
+
+#     game_thread = threading.Thread(target=start_game)
+#     game_thread.start()
+
+# P1 = Player()
+# E1 = Enemy()
+
+# pause = False
+
+# def play():
+#     P1.update()
+#     E1.move()
+
+#     DISPLAYSURF.fill(WHITE)
+#     P1.draw(DISPLAYSURF)
+#     E1.draw(DISPLAYSURF)
+
+#     pygame.display.update()
+#     FramePerSec.tick(FPS)
