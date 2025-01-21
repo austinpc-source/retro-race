@@ -4,26 +4,19 @@ import random
 
 pygame.init()
 
-FPS = 60
-FramePerSec = pygame.time.Clock()
-
 # Predefined some colors
 BLUE  = (0, 0, 255)
 RED   = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+
+FPS = 60
  
 # Screen information
 SCREEN_WIDTH = 400
 SCREEN_HEIGHT = 600
 
-
-DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-DISPLAYSURF.fill(WHITE)
-# pygame.display.set_caption("Game")
-
-clock = pygame.time.Clock()
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
@@ -62,57 +55,26 @@ class Player(pygame.sprite.Sprite):
 
 class Game:
     def __init__(self):
-        self.DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption("Game")
-        self.clock = pygame.time.Clock()
-        self.P1 = Player()
-        self.E1 = Enemy()
-        self.running = True
+        try:
+            print("Initializing Game")
+            self.DISPLAYSURF = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+            pygame.display.set_caption("Game")
+            self.clock = pygame.time.Clock()
+            self.P1 = Player()
+            self.E1 = Enemy()
+            print("Finished Initializing Game")
+        except Exception as e:
+            print(f"Error during Game initialization: {e}")
        
     def play(self):
-        print("Starting loop")
-        while self.running:
-            print("New Iteration")
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                
-            self.P1.update()
-            self.E1.move()
-
-            self.DISPLAYSURF.fill(WHITE)
-            self.P1.draw(DISPLAYSURF)
-            self.E1.draw(DISPLAYSURF)
-
-            pygame.display.update()
-            self.clock.tick(FPS)
-
-    def stop(self):
-        print("Someone called stop")
-        self.running = False
-
-# if __name__ == "__main__":
-#     import threading
-
-#     def start_game():
-#         game = Game()
-#         game.play()
-
-#     game_thread = threading.Thread(target=start_game)
-#     game_thread.start()
-
-# P1 = Player()
-# E1 = Enemy()
-
-# pause = False
-
-# def play():
-#     P1.update()
-#     E1.move()
-
-#     DISPLAYSURF.fill(WHITE)
-#     P1.draw(DISPLAYSURF)
-#     E1.draw(DISPLAYSURF)
-
-#     pygame.display.update()
-#     FramePerSec.tick(FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            
+        self.P1.update()
+        self.E1.move()
+        self.DISPLAYSURF.fill(WHITE)
+        self.P1.draw(DISPLAYSURF)
+        self.E1.draw(DISPLAYSURF)
+        pygame.display.update()
+        self.clock.tick(FPS)
